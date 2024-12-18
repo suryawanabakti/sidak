@@ -15,10 +15,69 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+
     public function products()
     {
         return $this->hasMany(Product::class);
     }
+
+    public function ijazah()
+    {
+        return $this->hasMany(Ijazah::class);
+    }
+
+    public function bkd()
+    {
+        return $this->hasMany(Bkd::class);
+    }
+
+    public function skp()
+    {
+        return $this->hasMany(Skp::class);
+    }
+
+    public function prestasi()
+    {
+        return $this->hasMany(Prestasi::class);
+    }
+
+    public function hki()
+    {
+        return $this->hasMany(Hki::class);
+    }
+
+    public function paten()
+    {
+        return $this->hasMany(Paten::class);
+    }
+
+    public function buku()
+    {
+        return $this->hasMany(Buku::class);
+    }
+    public function organisasi()
+    {
+        return $this->hasMany(Organisasi::class);
+    }
+    public function kompetensi()
+    {
+        return $this->hasMany(Kompetensi::class);
+    }
+    public function serdos()
+    {
+        return $this->hasMany(Serdos::class);
+    }
+
+    public function jabatan_fungsional()
+    {
+        return $this->hasMany(JabatanFungsional::class);
+    }
+
+    public function pangkat()
+    {
+        return $this->hasMany(Pangkat::class);
+    }
+
 
     public function getFilamentAvatarUrl(): ?string
     {
