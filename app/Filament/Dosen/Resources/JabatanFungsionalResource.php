@@ -23,7 +23,8 @@ class JabatanFungsionalResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-arrow-up';
     protected static ?string $navigationGroup = 'Menu Dosen';
-    protected static ?string $pluralModelLabel = 'Jabatan Fungsioanl';
+    protected static ?string $pluralModelLabel = 'Jabatan Fungsional';
+    protected static ?string $navigationLabel = 'Jabatan Fungsional';
 
     public static function form(Form $form): Form
     {
