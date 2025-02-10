@@ -9,10 +9,15 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateStaff extends CreateRecord
 {
     protected static string $resource = StaffResource::class;
+
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['role'] = 'staff';
-
         return $data;
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }
