@@ -13,7 +13,6 @@ class CreateDosen extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['role'] = 'dosen';
-
         return $data;
     }
 
