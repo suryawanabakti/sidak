@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Filament\Dosen\Resources;
+namespace App\Filament\Tendik\Resources;
 
-use App\Filament\Dosen\Resources\SerdosResource\Pages;
-use App\Filament\Dosen\Resources\SerdosResource\RelationManagers;
+use App\Filament\Tendik\Resources\SertifikatResource\Pages;
+use App\Filament\Tendik\Resources\SertifikatResource\RelationManagers;
 use App\Models\Serdos;
+use App\Models\Sertifikat;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -18,14 +19,15 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
 
-class SerdosResource extends Resource
+class SertifikatResource extends Resource
 {
     protected static ?string $model = Serdos::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-arrow-up';
-    protected static ?string $navigationGroup = 'Menu Dosen';
-    protected static ?string $pluralModelLabel = 'Serdos';
 
+    protected static ?string $navigationIcon = 'heroicon-o-document-arrow-up';
+    protected static ?string $navigationGroup = 'Menu Tendik';
+    protected static ?string $pluralModelLabel = 'Sertifikat';
+    protected static ?string $modelLabel = 'Sertifikat';
 
     public static function form(Form $form): Form
     {
@@ -67,6 +69,7 @@ class SerdosResource extends Resource
             ]);
     }
 
+
     public static function getRelations(): array
     {
         return [
@@ -77,10 +80,9 @@ class SerdosResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSerdos::route('/'),
-            'create' => Pages\CreateSerdos::route('/create'),
-            'view' => Pages\ViewSerdos::route('/{record}'),
-            'edit' => Pages\EditSerdos::route('/{record}/edit'),
+            'index' => Pages\ListSertifikats::route('/'),
+            'create' => Pages\CreateSertifikat::route('/create'),
+            'edit' => Pages\EditSertifikat::route('/{record}/edit'),
         ];
     }
 }

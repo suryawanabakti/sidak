@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Filament\Dosen\Resources;
+namespace App\Filament\Tendik\Resources;
 
-use App\Filament\Dosen\Resources\IjazahResource\Pages;
-use App\Filament\Dosen\Resources\IjazahResource\RelationManagers;
+use App\Filament\Tendik\Resources\IjazahResource\Pages;
+use App\Filament\Tendik\Resources\IjazahResource\RelationManagers;
 use App\Models\Ijazah;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -19,14 +18,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
-use Random\Engine\Secure;
 
 class IjazahResource extends Resource
 {
     protected static ?string $model = Ijazah::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-arrow-up';
-    protected static ?string $navigationGroup = 'Menu Dosen';
+    protected static ?string $navigationGroup = 'Menu Tendik';
     protected static ?string $pluralModelLabel = 'Ijazah';
 
 
@@ -85,6 +83,8 @@ class IjazahResource extends Resource
             ]);
     }
 
+
+
     public static function getRelations(): array
     {
         return [
@@ -98,7 +98,6 @@ class IjazahResource extends Resource
             'index' => Pages\ListIjazahs::route('/'),
             'create' => Pages\CreateIjazah::route('/create'),
             'edit' => Pages\EditIjazah::route('/{record}/edit'),
-            'view' => Pages\ViewIjazah::route('/{record}'),
         ];
     }
 }

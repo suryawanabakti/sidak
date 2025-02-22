@@ -68,6 +68,11 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         return $this->hasMany(Serdos::class);
     }
 
+    public function dataTendik()
+    {
+        return $this->hasMany(DataTendik::class);
+    }
+
     public function jabatan_fungsional()
     {
         return $this->hasMany(JabatanFungsional::class);

@@ -18,6 +18,8 @@ class LoginResponse implements LoginResponseContract
         if (auth()->user()) {
             if (auth()->user()->role == 'dosen') {
                 return redirect('/dosen');
+            } elseif (auth()->user()->role == 'tendik') {
+                return redirect('/tendik');
             } else {
                 return redirect('/admin');
             }

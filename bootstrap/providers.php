@@ -6,4 +6,5 @@ return [
     App\Providers\Filament\AdminPanelProvider::class,
     App\Providers\Filament\DosenPanelProvider::class,
     App\Providers\Filament\PimpinanPanelProvider::class,
+    App\Providers\Filament\TendikPanelProvider::class,
 ];

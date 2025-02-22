@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\DosenResource\RelationManagers\SerdosRelationManager;
 use App\Filament\Resources\TendikResource\Pages;
 use App\Filament\Resources\TendikResource\RelationManagers;
+use App\Filament\Resources\TendikResource\RelationManagers\DataTendikRelationManager;
 use App\Models\User;
 use App\Models\User\Tendik;
 use Filament\Forms;
@@ -107,7 +109,8 @@ class TendikResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            SerdosRelationManager::class,
+            DataTendikRelationManager::class
         ];
     }
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Dosen\Resources;
+namespace App\Filament\Tendik\Resources;
 
-use App\Filament\Dosen\Resources\SerdosResource\Pages;
-use App\Filament\Dosen\Resources\SerdosResource\RelationManagers;
+use App\Filament\Tendik\Resources\SerdosResource\Pages;
+use App\Filament\Tendik\Resources\SerdosResource\RelationManagers;
 use App\Models\Serdos;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -23,9 +23,7 @@ class SerdosResource extends Resource
     protected static ?string $model = Serdos::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-arrow-up';
-    protected static ?string $navigationGroup = 'Menu Dosen';
-    protected static ?string $pluralModelLabel = 'Serdos';
-
+    protected static ?string $navigationGroup = 'Menu Tendik';
 
     public static function form(Form $form): Form
     {
@@ -79,7 +77,6 @@ class SerdosResource extends Resource
         return [
             'index' => Pages\ListSerdos::route('/'),
             'create' => Pages\CreateSerdos::route('/create'),
-            'view' => Pages\ViewSerdos::route('/{record}'),
             'edit' => Pages\EditSerdos::route('/{record}/edit'),
         ];
     }
