@@ -24,7 +24,8 @@ class StaffResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-users';
     protected static ?string $navigationGroup = 'Pengguna';
-    protected static ?string $pluralModelLabel = 'Staff';
+    protected static ?string $pluralModelLabel = 'Pimpinan';
+    protected static ?string $modelLabel = 'Pimpinan';
 
 
     public static function form(Form $form): Form
@@ -85,7 +86,7 @@ class StaffResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(User::orderBy('created_at')->where('role', 'staff'))
+            ->query(User::orderBy('created_at')->where('role', 'pimpinan'))
             ->columns([
                 TextColumn::make('name')->searchable(),
                 TextColumn::make('email')->searchable(),

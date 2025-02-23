@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('judul');
             $table->text('anggota');
             $table->string('sertifikat');
+            $table->enum('status', ['proses', 'diterima', 'ditolak']);
             $table->timestamps();
         });
     }

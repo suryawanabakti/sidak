@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->integer('semester');
             $table->string('file');
+            $table->enum('status', ['proses', 'diterima', 'ditolak']);
             $table->timestamps();
         });
     }

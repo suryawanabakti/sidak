@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('sertifikat');
             $table->date('tanggal_aktif');
             $table->date('tanggal_berakhir');
+            $table->enum('status', ['proses', 'diterima', 'ditolak']);
             $table->timestamps();
         });
     }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('tahun');
             $table->text('anggota');
             $table->text('link');
+            $table->enum('status', ['proses', 'diterima', 'ditolak']);
             $table->timestamps();
         });
     }

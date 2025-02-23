@@ -33,7 +33,12 @@ class DataTendikResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $query = DataTendik::query();
+        if (!auth()->user()->role === 'admin') {
+            $query->where('user_id', auth()->id());
+        }
         return $table
+            ->query($query)
             ->columns([
                 TextColumn::make('ktp')->url(fn($record) => asset('storage/' . $record->ktp)),
                 TextColumn::make('kk')->url(fn($record) => asset('storage/' . $record->kk)),

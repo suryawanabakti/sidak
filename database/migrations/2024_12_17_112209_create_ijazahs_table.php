@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('pendidikan', ['S1', 'S2', 'S3']);
             $table->enum('tipe', ['ijazah', 'transkrip']);
             $table->string('file');
+            $table->enum('status', ['proses', 'diterima', 'ditolak']);
             $table->timestamps();
         });
     }

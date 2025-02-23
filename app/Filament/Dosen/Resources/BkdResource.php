@@ -5,6 +5,8 @@ namespace App\Filament\Dosen\Resources;
 use App\Filament\Dosen\Resources\BkdResource\Pages;
 use App\Filament\Dosen\Resources\BkdResource\RelationManagers;
 use App\Models\Bkd;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
@@ -12,6 +14,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -77,6 +80,7 @@ class BkdResource extends Resource
                 //
             ])
             ->actions([
+
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])

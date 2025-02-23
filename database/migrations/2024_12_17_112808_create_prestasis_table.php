@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('tanggal');
             $table->enum('tingkat', ['International', 'Nasional', 'Lokal']);
             $table->string('sertifikat');
+            $table->enum('status', ['proses', 'diterima', 'ditolak']);
             $table->timestamps();
         });
     }
