@@ -31,7 +31,7 @@ class BukuRelationManager extends RelationManager
                 TextInput::make('tahun')->numeric()->minLength(4)->maxLength(4)->required(),
                 Textarea::make('anggota')->required(),
                 TextInput::make('link')->required(),
-                Tables\Columns\TextColumn::make('status')->searchable()->sortable()->badge(),
+
             ]);
     }
 
@@ -47,7 +47,8 @@ class BukuRelationManager extends RelationManager
                     ->url(fn($record) => $record->link) // Membuat URL file
                     ->openUrlInNewTab() // Buka file di tab baru
                     ->icon('heroicon-o-arrow-down-on-square') // Tambahkan ikon download
-                    ->color('primary')
+                    ->color('primary'),
+                TextColumn::make('status')->badge(),
             ])
             ->filters([
                 //
@@ -60,7 +61,7 @@ class BukuRelationManager extends RelationManager
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
                         ->modalHeading('Konfirmasi Persetujuan')
-                        ->modalDescription('Apakah Anda yakin ingin menyetujui pembayaran ini?')
+                        ->modalDescription('Apakah Anda yakin ingin menyetujui ini?')
                         ->modalSubmitActionLabel('Terima')
                         ->modalCancelActionLabel('Batal')
                         ->action(function ($record) {
@@ -74,7 +75,7 @@ class BukuRelationManager extends RelationManager
                         ->icon('heroicon-o-x-mark')
                         ->color('danger')
                         ->modalHeading('Konfirmasi Persetujuan')
-                        ->modalDescription('Apakah Anda yakin ingin menyetujui pembayaran ini?')
+                        ->modalDescription('Apakah Anda yakin ingin menolak ini?')
                         ->modalSubmitActionLabel('Tolak')
                         ->modalCancelActionLabel('Batal')
                         ->action(function ($record) {

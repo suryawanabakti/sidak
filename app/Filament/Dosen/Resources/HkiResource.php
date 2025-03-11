@@ -41,14 +41,15 @@ class HkiResource extends Resource
                             DatePicker::make('tanggal'),
                             TextInput::make('judul'),
                         ]),
-                        Grid::make(1)->schema([
-                            Select::make('tingkat')->options([
-                                'International' => 'International',
-                                'Nasional' => 'Nasional',
-                                'Lokal' => 'Lokal',
-                            ]),
+                        TextInput::make('anggota'),
+                        // Grid::make(1)->schema([
+                        //     Select::make('tingkat')->options([
+                        //         'International' => 'International',
+                        //         'Nasional' => 'Nasional',
+                        //         'Lokal' => 'Lokal',
+                        //     ]),
 
-                        ])
+                        // ])
                     ])
             ]);
     }
@@ -56,17 +57,19 @@ class HkiResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Hki::where('user_id', auth()->id()))
             ->columns([
                 TextColumn::make('tanggal'),
                 TextColumn::make('judul'),
-                TextColumn::make('tingkat'),
+
                 TextColumn::make('sertifikat')
                     ->label('Download File')
                     ->formatStateUsing(fn($state) => basename($state)) // Menampilkan hanya nama file
                     ->url(fn($record) => Storage::url($record->sertifikat)) // Membuat URL file
                     ->openUrlInNewTab() // Buka file di tab baru
                     ->icon('heroicon-o-arrow-down-on-square') // Tambahkan ikon download
-                    ->color('primary')
+                    ->color('primary'),
+                TextColumn::make('status'),
             ])
             ->filters([
                 //

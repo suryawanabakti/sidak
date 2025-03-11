@@ -44,7 +44,7 @@ class IjazahResource extends Resource
                                 'S2' => 'S2',
                                 'S3' => 'S3',
                             ])->required(),
-                            Select::make('type')->options([
+                            Select::make('tipe')->options([
                                 'ijazah' => 'ijazah',
                                 'transkrip' => 'transkrip',
                             ])->required()

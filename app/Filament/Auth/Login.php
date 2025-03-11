@@ -12,6 +12,7 @@ use Illuminate\Validation\ValidationException;
 
 class Login extends BaseAuth
 {
+
     public function form(Form $form): Form
     {
         return $form
@@ -22,6 +23,7 @@ class Login extends BaseAuth
             ])
             ->statePath('data');
     }
+
     protected function getPasswordFormComponent(): Component
     {
         return TextInput::make('password')
@@ -37,7 +39,7 @@ class Login extends BaseAuth
     protected function getLoginFormComponent(): Component
     {
         return TextInput::make('login')
-            ->label('Name Or Email')
+            ->label('Email')
             ->required()
             ->autocomplete()
             ->autofocus()
@@ -48,7 +50,6 @@ class Login extends BaseAuth
     protected function getCredentialsFromFormData(array $data): array
     {
         $login_type = filter_var($data['login'], FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
-
         return [
             $login_type => $data['login'],
             'password'  => $data['password'],

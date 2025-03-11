@@ -32,12 +32,14 @@ class PangkatResource extends Resource
             ->schema([
                 FileUpload::make('file')->required()->directory('jabatanfungsional/' . auth()->user()->username),
                 DatePicker::make('tmt')->required(),
+
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Pangkat::where('user_id', auth()->id()))
             ->columns([
                 TextColumn::make('tmt'),
                 TextColumn::make('file')
@@ -46,7 +48,8 @@ class PangkatResource extends Resource
                     ->url(fn($record) => Storage::url($record->file)) // Membuat URL file
                     ->openUrlInNewTab() // Buka file di tab baru
                     ->icon('heroicon-o-arrow-down-on-square') // Tambahkan ikon download
-                    ->color('primary')
+                    ->color('primary'),
+                TextColumn::make('status'),
             ])
             ->filters([
                 //

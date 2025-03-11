@@ -23,15 +23,13 @@ class ViewOrganisasi extends ViewRecord
                     $record = $this->getRecord();
 
                     // Assuming 'file_path' is the attribute storing the file path
-                    $filePath = $record->kartuanggota;
-
+                    $filePath = $record->kartu_anggota;
                     // Validate file existence
                     if (Storage::disk('public')->exists($filePath)) {
                         return response()->download(Storage::disk('public')->path($filePath));
                     }
-
                     // Handle file not found
-                    notification()->danger('File not found.');
+                    // notification()->danger('File not found.');
                 }),
             Action::make('downloadSertifikat')
                 ->label('Download Sertifikat')

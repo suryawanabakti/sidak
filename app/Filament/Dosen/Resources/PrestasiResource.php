@@ -56,6 +56,7 @@ class PrestasiResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Prestasi::where('user_id', auth()->id()))
             ->columns([
                 TextColumn::make('tanggal'),
                 TextColumn::make('judul'),
@@ -66,7 +67,8 @@ class PrestasiResource extends Resource
                     ->url(fn($record) => Storage::url($record->sertifikat)) // Membuat URL file
                     ->openUrlInNewTab() // Buka file di tab baru
                     ->icon('heroicon-o-arrow-down-on-square') // Tambahkan ikon download
-                    ->color('primary')
+                    ->color('primary'),
+                TextColumn::make('status'),
             ])
             ->filters([
                 //

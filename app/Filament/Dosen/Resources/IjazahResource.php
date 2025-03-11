@@ -46,7 +46,7 @@ class IjazahResource extends Resource
                                 'S2' => 'S2',
                                 'S3' => 'S3',
                             ])->required(),
-                            Select::make('type')->options([
+                            Select::make('tipe')->options([
                                 'ijazah' => 'ijazah',
                                 'transkrip' => 'transkrip',
                             ])->required()
@@ -68,7 +68,8 @@ class IjazahResource extends Resource
                     ->url(fn($record) => Storage::url($record->file)) // Membuat URL file
                     ->openUrlInNewTab() // Buka file di tab baru
                     ->icon('heroicon-o-arrow-down-on-square') // Tambahkan ikon download
-                    ->color('primary')
+                    ->color('primary'),
+                TextColumn::make('status'),
             ])
             ->filters([
                 //

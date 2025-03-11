@@ -66,6 +66,7 @@ class BkdResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Bkd::where('user_id', auth()->id()))
             ->columns([
                 TextColumn::make('semester'),
                 TextColumn::make('file')
@@ -74,7 +75,8 @@ class BkdResource extends Resource
                     ->url(fn($record) => Storage::url($record->file)) // Membuat URL file
                     ->openUrlInNewTab() // Buka file di tab baru
                     ->icon('heroicon-o-arrow-down-on-square') // Tambahkan ikon download
-                    ->color('primary')
+                    ->color('primary'),
+                TextColumn::make('status'),
             ])
             ->filters([
                 //

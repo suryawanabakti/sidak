@@ -8,4 +8,9 @@ class JabatanFungsional extends Model
 {
     protected $guarded = ['id'];
     public $table = 'jabatan_fungsional';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

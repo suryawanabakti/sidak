@@ -69,7 +69,7 @@ class HkiRelationManager extends RelationManager
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
                         ->modalHeading('Konfirmasi Persetujuan')
-                        ->modalDescription('Apakah Anda yakin ingin menyetujui pembayaran ini?')
+                        ->modalDescription('Apakah Anda yakin ingin menyetujui ini?')
                         ->modalSubmitActionLabel('Terima')
                         ->modalCancelActionLabel('Batal')
                         ->action(function ($record) {
@@ -83,7 +83,7 @@ class HkiRelationManager extends RelationManager
                         ->icon('heroicon-o-x-mark')
                         ->color('danger')
                         ->modalHeading('Konfirmasi Persetujuan')
-                        ->modalDescription('Apakah Anda yakin ingin menyetujui pembayaran ini?')
+                        ->modalDescription('Apakah Anda yakin ingin menolak ini?')
                         ->modalSubmitActionLabel('Tolak')
                         ->modalCancelActionLabel('Batal')
                         ->action(function ($record) {

@@ -41,7 +41,8 @@ class PatenResource extends Resource
                             DatePicker::make('tanggal')->required(),
                             TextInput::make('judul')->required(),
                         ]),
-                        Textarea::make('anggota')->required()
+                        Textarea::make('anggota')->required(),
+
                     ])
             ]);
     }
@@ -49,6 +50,7 @@ class PatenResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Paten::where('user_id', auth()->id()))
             ->columns([
                 TextColumn::make('tanggal')->searchable()->sortable(),
                 TextColumn::make('judul')->searchable()->sortable(),
@@ -58,7 +60,9 @@ class PatenResource extends Resource
                     ->url(fn($record) => Storage::url($record->sertifikat)) // Membuat URL file
                     ->openUrlInNewTab() // Buka file di tab baru
                     ->icon('heroicon-o-arrow-down-on-square') // Tambahkan ikon download
-                    ->color('primary')
+                    ->color('primary'),
+                // TextColumn::make('updated_at')->searchable()->sortable()->label('Tanggal Verifikasi'),
+                TextColumn::make('status'),
             ])
             ->filters([
                 //

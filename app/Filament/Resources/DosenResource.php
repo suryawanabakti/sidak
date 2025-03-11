@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 
 use App\Filament\Resources\DosenResource\Pages;
-use App\Filament\Resources\DosenResource\RelationManagers;
 use App\Filament\Resources\DosenResource\RelationManagers\BkdRelationManager;
 use App\Filament\Resources\DosenResource\RelationManagers\BukuRelationManager;
 use App\Filament\Resources\DosenResource\RelationManagers\HkiRelationManager;
@@ -29,6 +28,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
 
@@ -41,6 +41,16 @@ class DosenResource extends Resource
     protected static ?string $pluralModelLabel = 'Dosen';
 
 
+    public static function canCreate(): bool
+    {
+        return auth()->user()?->role === 'admin';
+    }
+
+    public static function canDelete(Model $model): bool
+    {
+        return auth()->user()?->role === 'admin';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -50,30 +60,12 @@ class DosenResource extends Resource
                     ->schema([
                         Grid::make(2) // Layout 2 kolom
                             ->schema([
-                                TextInput::make('name')
-                                    ->label('Full Name')
-                                    ->placeholder('Enter full name')
+                                TextInput::make('name')->label('Full Name')->placeholder('Enter full name')->required()->maxLength(255),
+                                TextInput::make('email')->label('Email Address')->placeholder('example@mail.com')->email()->unique('users', 'email') // Validasi unik
                                     ->required()
                                     ->maxLength(255),
-
-                                TextInput::make('email')
-                                    ->label('Email Address')
-                                    ->placeholder('example@mail.com')
-                                    ->email()
-                                    ->unique('users', 'email') // Validasi unik
-                                    ->required()
-                                    ->maxLength(255),
-
-                                TextInput::make('username')
-                                    ->label('Username')
-                                    ->placeholder('Enter username')
-                                    ->unique('users', 'username') // Validasi unik
-                                    ->required()
-                                    ->minLength(3)
-                                    ->maxLength(50)
-                                    ->helperText('Username must be unique and 3-50 characters long.'),
+                                TextInput::make('username')->label('Username')->placeholder('Enter username')->unique('users', 'username') // Validasi unik->required()->minLength(3) ->maxLength(50)->helperText('Username must be unique and 3-50 characters long.'),
                             ]),
-
                         Grid::make(1)
                             ->schema([
                                 TextInput::make('password')

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\DosenResource\RelationManagers\IjazahRelationManager;
 use App\Filament\Resources\DosenResource\RelationManagers\SerdosRelationManager;
 use App\Filament\Resources\TendikResource\Pages;
 use App\Filament\Resources\TendikResource\RelationManagers;
@@ -18,6 +19,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TendikResource extends Resource
@@ -27,7 +29,14 @@ class TendikResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-s-users';
     protected static ?string $navigationGroup = 'Pengguna';
     protected static ?string $pluralModelLabel = 'Tendik';
-
+    public static function canCreate(): bool
+    {
+        return auth()->user()?->role === 'admin';
+    }
+    public static function canDelete(Model $model): bool
+    {
+        return auth()->user()?->role === 'admin';
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -47,14 +56,14 @@ class TendikResource extends Resource
                                     ->label('Email Address')
                                     ->placeholder('example@mail.com')
                                     ->email()
-                                    ->unique('users', 'email') // Validasi unik
+                                    ->unique(ignoreRecord: true) // Validasi unik
                                     ->required()
                                     ->maxLength(255),
 
                                 TextInput::make('username')
                                     ->label('Username')
                                     ->placeholder('Enter username')
-                                    ->unique('users', 'username') // Validasi unik
+                                    ->unique(ignoreRecord: true) // Validasi unik
                                     ->required()
                                     ->minLength(3)
                                     ->maxLength(50)
@@ -110,7 +119,8 @@ class TendikResource extends Resource
     {
         return [
             SerdosRelationManager::class,
-            DataTendikRelationManager::class
+            DataTendikRelationManager::class,
+            IjazahRelationManager::class
         ];
     }
 

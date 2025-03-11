@@ -50,7 +50,8 @@ class SerdosResource extends Resource
                     ->url(fn($record) => Storage::url($record->sertifikat)) // Membuat URL file
                     ->openUrlInNewTab() // Buka file di tab baru
                     ->icon('heroicon-o-arrow-down-on-square') // Tambahkan ikon download
-                    ->color('primary')
+                    ->color('primary'),
+                TextColumn::make('status'),
             ])
             ->filters([
                 //

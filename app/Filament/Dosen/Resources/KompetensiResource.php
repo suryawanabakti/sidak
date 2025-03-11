@@ -29,6 +29,7 @@ class KompetensiResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+
             ->schema([
                 Grid::make(1)->schema([
                     FileUpload::make('sertifikat')->directory('kompetensi/' . auth()->user()->username)->required(),
@@ -47,10 +48,12 @@ class KompetensiResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Kompetensi::where('user_id', auth()->id()))
             ->columns([
                 TextColumn::make('tanggal')->searchable()->sortable(),
                 TextColumn::make('judul')->searchable()->sortable(),
-                TextColumn::make('tingkat')->searchable()->sortable()
+                TextColumn::make('tingkat')->searchable()->sortable(),
+                TextColumn::make('status'),
             ])
             ->filters([
                 //

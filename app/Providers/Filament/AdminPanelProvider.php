@@ -18,22 +18,55 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
-use Illuminate\Support\Facades\View;
+
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Auth\Login;
+use Filament\Facades\Filament;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Blade;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
 
+    public function boot(): void
+    {
+        Filament::serving(function () {
+            Filament::registerRenderHook(
+                'panels::body.end', // Hook untuk menampilkan di bawah konten
+                fn() => view('filament.footer') // View custom untuk footer
+            );
+        });
+    }
+
+
     public function panel(Panel $panel): Panel
     {
 
         return $panel
+            ->brandLogo('/lambang.png')
+
+            ->brandName('SIDAK')
+            ->renderHook('panels::body.start', fn() => '<style>
+                    .fi-topbar > nav {
+                    background: linear-gradient(90deg, #0D47A1, #42A5F5) !important;
+                        color: white !important;
+                    }
+                </style>')
+            ->renderHook(
+                'panels::body.end',
+                fn(): View => view('filament.footer')
+            )
+            ->spa()
+            ->renderHook(
+                'panels::topbar.start',
+                fn(): View => view('filament.header')
+            )
             ->default()
             ->id('admin')
+
             ->path('admin')
-            ->login(Login::class)
+            // ->login(Login::class)
             ->colors([
                 'primary' => Color::Blue,
             ])

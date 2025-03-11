@@ -28,12 +28,16 @@ class StaffResource extends Resource
     protected static ?string $modelLabel = 'Pimpinan';
 
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->role === 'admin';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Section::make('Create New Tendik') // Bagian utama
-
                     ->description('Please fill in the details to add a new tendik.') // Deskripsi form
                     ->schema([
                         Grid::make(2) // Layout 2 kolom
@@ -86,7 +90,7 @@ class StaffResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(User::orderBy('created_at')->where('role', 'pimpinan'))
+            ->query(User::orderBy('created_at')->where('role', 'staff'))
             ->columns([
                 TextColumn::make('name')->searchable(),
                 TextColumn::make('email')->searchable(),

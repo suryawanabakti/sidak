@@ -39,6 +39,7 @@ class BukuResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Buku::where('user_id', auth()->id()))
             ->columns([
                 TextColumn::make('judul')->searchable(),
                 TextColumn::make('tahun')->searchable(),
@@ -48,7 +49,8 @@ class BukuResource extends Resource
                     ->url(fn($record) => $record->link) // Membuat URL file
                     ->openUrlInNewTab() // Buka file di tab baru
                     ->icon('heroicon-o-arrow-down-on-square') // Tambahkan ikon download
-                    ->color('primary')
+                    ->color('primary'),
+                TextColumn::make('status'),
             ])
             ->filters([
                 //

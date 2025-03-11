@@ -16,6 +16,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 
 class OrganisasiResource extends Resource
 {
@@ -34,16 +35,33 @@ class OrganisasiResource extends Resource
                 TextInput::make('nama_organisasi')->required(),
                 DatePicker::make('tanggal_aktif')->required(),
                 DatePicker::make('tanggal_berakhir')->required(),
+
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Organisasi::where('user_id', auth()->id()))
             ->columns([
                 TextColumn::make('nama_organisasi'),
                 TextColumn::make('tanggal_aktif'),
                 TextColumn::make('tanggal_berakhir'),
+                TextColumn::make('kartu_anggota')
+                    ->label('Kartu Anggota')
+                    ->formatStateUsing(fn($state) => basename($state)) // Menampilkan hanya nama file
+                    ->url(fn($record) => Storage::url($record->kartu_anggota)) // Membuat URL file
+                    ->openUrlInNewTab() // Buka file di tab baru
+                    ->icon('heroicon-o-arrow-down-on-square') // Tambahkan ikon download
+                    ->color('primary'),
+                TextColumn::make('sertifikat')
+                    ->label('Sertifikat')
+                    ->formatStateUsing(fn($state) => basename($state)) // Menampilkan hanya nama file
+                    ->url(fn($record) => Storage::url($record->sertifikat)) // Membuat URL file
+                    ->openUrlInNewTab() // Buka file di tab baru
+                    ->icon('heroicon-o-arrow-down-on-square') // Tambahkan ikon download
+                    ->color('primary'),
+                TextColumn::make('status'),
             ])
             ->filters([
                 //

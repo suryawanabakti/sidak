@@ -38,15 +38,7 @@ class SkpResource extends Resource
                         FileUpload::make('file')->directory('skp/' . auth()->user()->username)
                             ->acceptedFileTypes(['application/pdf'])
                             ->required(),
-                        DatePicker::make('tahun')
-                            ->label('Tahun')
-                            ->displayFormat('Y') // Menampilkan hanya tahun
-                            ->format('Y')        // Format yang disimpan di database
-                            ->required()
-                            ->native(false)      // Menonaktifkan input bawaan browser
-                            ->reactive()
-                            ->closeOnDateSelection() // Menutup picker setelah memilih
-
+                        TextInput::make('tahun')->numeric()->minLength(4)->required(),
                     ])
 
             ]);
@@ -55,6 +47,7 @@ class SkpResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Skp::where('user_id', auth()->id()))
             ->columns([
                 TextColumn::make('tahun'),
                 TextColumn::make('file')
@@ -63,7 +56,8 @@ class SkpResource extends Resource
                     ->url(fn($record) => Storage::url($record->file)) // Membuat URL file
                     ->openUrlInNewTab() // Buka file di tab baru
                     ->icon('heroicon-o-arrow-down-on-square') // Tambahkan ikon download
-                    ->color('primary')
+                    ->color('primary'),
+                TextColumn::make('status'),
             ])
             ->filters([
                 //

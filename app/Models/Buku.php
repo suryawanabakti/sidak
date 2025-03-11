@@ -8,4 +8,9 @@ class Buku extends Model
 {
     protected $guarded = ['id'];
     public $table = 'buku';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

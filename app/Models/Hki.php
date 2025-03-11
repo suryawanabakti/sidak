@@ -8,4 +8,9 @@ class Hki extends Model
 {
     protected $guarded = ['id'];
     public $table = 'hki';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -38,6 +38,7 @@ class JabatanFungsionalResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(JabatanFungsional::where('user_id', auth()->id()))
             ->columns([
                 TextColumn::make('tmt'),
                 TextColumn::make('file')
@@ -46,7 +47,8 @@ class JabatanFungsionalResource extends Resource
                     ->url(fn($record) => Storage::url($record->file)) // Membuat URL file
                     ->openUrlInNewTab() // Buka file di tab baru
                     ->icon('heroicon-o-arrow-down-on-square') // Tambahkan ikon download
-                    ->color('primary')
+                    ->color('primary'),
+                TextColumn::make('status'),
             ])
             ->filters([
                 //

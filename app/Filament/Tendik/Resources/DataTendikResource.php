@@ -14,6 +14,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 
 class DataTendikResource extends Resource
 {
@@ -21,13 +22,15 @@ class DataTendikResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document';
     protected static ?string $navigationLabel = 'Data Tendik';
+    protected static ?string $modelLabel = 'Data Tendik';
+    protected static ?string $pluralModelLabel = 'Data Tendik';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                FileUpload::make('ktp'),
-                FileUpload::make('kk'),
+                FileUpload::make('ktp')->required(),
+                FileUpload::make('kk')->required(),
             ]);
     }
 
@@ -40,8 +43,20 @@ class DataTendikResource extends Resource
         return $table
             ->query($query)
             ->columns([
-                TextColumn::make('ktp')->url(fn($record) => asset('storage/' . $record->ktp)),
-                TextColumn::make('kk')->url(fn($record) => asset('storage/' . $record->kk)),
+                TextColumn::make('ktp')
+                    ->label('KTP')
+                    ->formatStateUsing(fn($state) => basename($state)) // Menampilkan hanya nama file
+                    ->url(fn($record) => Storage::url($record->ktp)) // Membuat URL file
+                    ->openUrlInNewTab() // Buka file di tab baru
+                    ->icon('heroicon-o-arrow-down-on-square') // Tambahkan ikon download
+                    ->color('primary'),
+                TextColumn::make('kk')
+                    ->label('KK')
+                    ->formatStateUsing(fn($state) => basename($state)) // Menampilkan hanya nama file
+                    ->url(fn($record) => Storage::url($record->kk)) // Membuat URL file
+                    ->openUrlInNewTab() // Buka file di tab baru
+                    ->icon('heroicon-o-arrow-down-on-square') // Tambahkan ikon download
+                    ->color('primary'),
             ])
             ->filters([
                 //
