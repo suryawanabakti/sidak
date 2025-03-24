@@ -35,8 +35,7 @@ class PrestasiResource extends Resource
             ->schema([
                 Section::make('Buat prestasi baru')->description('Please fill')
                     ->schema([
-                        FileUpload::make('sertifikat')->directory('prestasi/' . auth()->user()->username)
-                            ->acceptedFileTypes(['application/pdf']),
+                        FileUpload::make('sertifikat')->directory('prestasi/' . auth()->user()->username),
                         Grid::make(2)->schema([
                             DatePicker::make('tanggal'),
                             TextInput::make('judul'),

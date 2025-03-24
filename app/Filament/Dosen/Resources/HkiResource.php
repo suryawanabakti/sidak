@@ -35,8 +35,7 @@ class HkiResource extends Resource
             ->schema([
                 Section::make('Buat hki baru')->description('Please fill')
                     ->schema([
-                        FileUpload::make('sertifikat')->directory('hki/' . auth()->user()->username)
-                            ->acceptedFileTypes(['application/pdf']),
+                        FileUpload::make('sertifikat')->directory('hki/' . auth()->user()->username),
                         Grid::make(2)->schema([
                             DatePicker::make('tanggal'),
                             TextInput::make('judul'),

@@ -36,7 +36,7 @@ class SkpResource extends Resource
                     ->description('Please fill in the details to add a new SKP.') // Deskripsi form
                     ->schema([
                         FileUpload::make('file')->directory('skp/' . auth()->user()->username)
-                            ->acceptedFileTypes(['application/pdf'])
+
                             ->required(),
                         TextInput::make('tahun')->numeric()->minLength(4)->required(),
                     ])

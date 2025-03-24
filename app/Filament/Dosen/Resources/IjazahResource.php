@@ -38,7 +38,6 @@ class IjazahResource extends Resource
                     ->description('Please fill in the details to add a new ijazah.') // Deskripsi form
                     ->schema([
                         FileUpload::make('file')->directory('ijazah/' . auth()->user()->username)
-                            ->acceptedFileTypes(['application/pdf'])
                             ->required(),
                         Grid::make(2)->schema([
                             Select::make('pendidikan')->options([

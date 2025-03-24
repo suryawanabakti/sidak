@@ -39,7 +39,6 @@ class BkdResource extends Resource
                     ->description('Please fill in the details to add a new BKD.') // Deskripsi form
                     ->schema([
                         FileUpload::make('file')->directory('bkd/' . auth()->user()->username)
-                            ->acceptedFileTypes(['application/pdf'])
                             ->required(),
 
                         Select::make('semester')->options([

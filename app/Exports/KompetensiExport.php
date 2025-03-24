@@ -20,13 +20,12 @@ class KompetensiExport implements FromCollection, WithHeadings
                 'judul' => $data->judul,
                 'penyelenggara' => $data->penyelenggara,
                 'tingkat' => $data->tingkat,
-                'url' => url('storage/' . $data->sertifikat)
             ];
         });
     }
 
     public function headings(): array
     {
-        return ["TANGGAL", "NAMA", "JUDUL", "PENYELENGGARA", "TINGKAT", "URL"];
+        return ["TANGGAL", "NAMA", "JUDUL", "PENYELENGGARA", "TINGKAT"];
     }
 }

@@ -2,12 +2,17 @@
 
 namespace App\Livewire;
 
+use App\Exports\OrganisasiExport;
 use App\Models\Organisasi;
+use Carbon\Carbon;
+use Filament\Forms\Components\DatePicker;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TableLaporanOrganisasi extends BaseWidget
 {
@@ -18,15 +23,36 @@ class TableLaporanOrganisasi extends BaseWidget
                 Action::make('export_pdf')
                     ->label('Export PDF')
                     ->color('success')
-                    ->url(fn() => route('export.organisasi.pdf'), true)
+                    ->url(fn() => route('export.organisasi.pdf'), true),
+                Action::make('export_excel')
+                    ->label('Export Excel')
+                    // ->icon('heroicon-o-download')
+                    ->color('success')
+                    ->action(fn() => Excel::download(new OrganisasiExport, 'organisasi.xlsx'))
             ])
             ->query(
                 Organisasi::where('status', 'diterima')
                     ->with('user')
             )
+            ->filters([
+                Tables\Filters\SelectFilter::make('user_id')
+                    ->label('User')
+                    ->relationship('user', 'name') // Correct way to use relationships in Filament
+                    ->options(\App\Models\User::pluck('name', 'id')),
+                Filter::make('updated_at')
+                    ->form([
+                        DatePicker::make('from')->label('From Date'),
+                        DatePicker::make('to')->label('To Date'),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when($data['from'], fn($q) => $q->where('updated_at', '>=', Carbon::parse($data['from'])))
+                            ->when($data['to'], fn($q) => $q->where('updated_at', '<=', Carbon::parse($data['to'])->endOfDay()));
+                    }),
+            ])
             ->columns([
-                TextColumn::make('user.name')->label('Nama'),
-                TextColumn::make('nama_organisasi'),
+                TextColumn::make('user.name')->label('Nama')->searchable(),
+                TextColumn::make('nama_organisasi')->searchable(),
                 // TextColumn::make('kartu_anggota'),
                 TextColumn::make('tanggal_aktif'),
                 TextColumn::make('tanggal_berakhir'),

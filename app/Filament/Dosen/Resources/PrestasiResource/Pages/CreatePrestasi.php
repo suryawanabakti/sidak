@@ -13,7 +13,9 @@ class CreatePrestasi extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['user_id'] = auth()->id();
-
+        if (auth()->user()->role === "staff") {
+            $data['status'] = "diterima";
+        }
         return $data;
     }
 }

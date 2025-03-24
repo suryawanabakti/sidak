@@ -36,7 +36,7 @@ class PatenResource extends Resource
                 Section::make('Form Paten')->description('Paten adalah hak eksklusif yang diberikan oleh negara kepada penemu atas hasil invensi (penemuannya) di bidang teknologi untuk jangka waktu tertentu.')
                     ->schema([
                         FileUpload::make('sertifikat')->directory('paten/' . auth()->user()->username)
-                            ->acceptedFileTypes(['application/pdf'])->required(),
+                            ->required(),
                         Grid::make(2)->schema([
                             DatePicker::make('tanggal')->required(),
                             TextInput::make('judul')->required(),

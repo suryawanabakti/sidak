@@ -4,9 +4,12 @@ namespace App\Livewire;
 
 use App\Exports\BkdExport;
 use App\Models\Bkd;
+use Carbon\Carbon;
+use Filament\Forms\Components\DatePicker;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Support\Facades\Storage;
@@ -24,13 +27,29 @@ class TableLaporanBkd extends BaseWidget
                     ->color('success')
                     ->action(fn() => Excel::download(new BkdExport, 'laporan_bkd.xlsx'))
             ])
+            ->filters([
+                Tables\Filters\SelectFilter::make('user_id')
+                    ->label('User')
+                    ->relationship('user', 'name') // Correct way to use relationships in Filament
+                    ->options(\App\Models\User::pluck('name', 'id')),
+                Filter::make('updated_at')
+                    ->form([
+                        DatePicker::make('from')->label('From Date'),
+                        DatePicker::make('to')->label('To Date'),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when($data['from'], fn($q) => $q->where('updated_at', '>=', Carbon::parse($data['from'])))
+                            ->when($data['to'], fn($q) => $q->where('updated_at', '<=', Carbon::parse($data['to'])->endOfDay()));
+                    }),
+            ])
             ->query(
                 Bkd::where('status', 'diterima')
             )
             ->columns([
                 TextColumn::make('created_at'),
-                TextColumn::make('user.name'),
-                TextColumn::make('semester'),
+                TextColumn::make('user.name')->searchable(),
+                TextColumn::make('semester')->searchable(),
                 TextColumn::make('file')
                     ->label('File')
                     ->formatStateUsing(fn($state) => basename($state)) // Menampilkan hanya nama file

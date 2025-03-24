@@ -39,6 +39,7 @@ class DosenResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-s-users';
     protected static ?string $navigationGroup = 'Pengguna';
     protected static ?string $pluralModelLabel = 'Dosen';
+    protected static ?string $modelLabel = 'Dosen';
 
 
     public static function canCreate(): bool
@@ -60,11 +61,12 @@ class DosenResource extends Resource
                     ->schema([
                         Grid::make(2) // Layout 2 kolom
                             ->schema([
+                                TextInput::make('nidn')->label('NIDN')->placeholder('Enter NIDN')->required()->maxLength(255),
                                 TextInput::make('name')->label('Full Name')->placeholder('Enter full name')->required()->maxLength(255),
-                                TextInput::make('email')->label('Email Address')->placeholder('example@mail.com')->email()->unique('users', 'email') // Validasi unik
+                                TextInput::make('email')->label('Email Address')->placeholder('example@mail.com')->email()->unique(ignoreRecord: true) // Validasi unik
                                     ->required()
                                     ->maxLength(255),
-                                TextInput::make('username')->label('Username')->placeholder('Enter username')->unique('users', 'username') // Validasi unik->required()->minLength(3) ->maxLength(50)->helperText('Username must be unique and 3-50 characters long.'),
+                                TextInput::make('username')->label('Username')->placeholder('Enter username')->unique(ignoreRecord: true)
                             ]),
                         Grid::make(1)
                             ->schema([
@@ -92,6 +94,7 @@ class DosenResource extends Resource
         return $table
             ->query(User::orderBy('created_at')->where('role', 'dosen'))
             ->columns([
+                TextColumn::make('nidn')->searchable(),
                 TextColumn::make('name')->searchable(),
                 TextColumn::make('email')->searchable(),
             ])

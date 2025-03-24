@@ -29,6 +29,12 @@ class TendikResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-s-users';
     protected static ?string $navigationGroup = 'Pengguna';
     protected static ?string $pluralModelLabel = 'Tendik';
+
+    public static function canAccess(): bool
+    {
+        return false;
+    }
+
     public static function canCreate(): bool
     {
         return auth()->user()?->role === 'admin';
